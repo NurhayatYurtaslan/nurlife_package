@@ -12,12 +12,13 @@ class NurlifeWidget extends StatelessWidget {
       child: Stack(
         children: [
           // Arka plan daire
-          Container(
+          const Positioned(
             width: 50,
             height: 50,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.pink,
+            left: 0,
+            bottom: 0,
+            child: CircleAvatar(
+              backgroundColor: Colors.pink,
             ),
           ),
           // İçerik
