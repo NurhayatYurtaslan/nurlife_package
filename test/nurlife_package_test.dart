@@ -1,27 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:nurlife_package/nurlife_package.dart';
+import 'package:your_package_name/heart_animation.dart';
 
 void main() {
-  testWidgets('NurlifeWidget test', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(
-      home: Scaffold(
-        body: NurlifeWidget(text: 'Test Text'),
+  testWidgets('HeartAnimation widget test', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: HeartAnimation(),
+          ),
+        ),
       ),
-    ));
+    );
 
-    // Arka plan renginin kontrolü
-    final backgroundFinder = find.byType(Container);
-    expect(backgroundFinder, findsOneWidget);
-    final backgroundContainer = tester.widget<Container>(backgroundFinder);
-    expect(backgroundContainer.decoration, BoxDecoration(color: Colors.blue));
+    // HeartAnimation widget'ının yüklenip yüklenmediğini kontrol edin
+    expect(find.byType(HeartAnimation), findsOneWidget);
 
-    // İçerik metnin kontrolü
-    final textFinder = find.text('Test Text');
-    expect(textFinder, findsOneWidget);
-    final textWidget = tester.widget<Text>(textFinder);
-    expect(textWidget.style!.color, Colors.white);
-    expect(textWidget.style!.fontSize, 12.0);
-    expect(textWidget.style!.fontWeight, FontWeight.bold);
+    // HeartAnimation widget'ının doğru boyutlara sahip olup olmadığını kontrol edin
+    expect(tester.getSize(find.byType(HeartAnimation)), const Size(100, 100));
+
+    // HeartAnimation widget'ının doğru renge sahip olup olmadığını kontrol edin
+    final iconFinder = find.byIcon(Icons.favorite);
+    final iconWidget = tester.widget<Icon>(iconFinder);
+    expect(iconWidget.color, Colors.red);
+
+    // Animasyonun başlatıldığını kontrol edin
+    final animationController = tester.state<HeartAnimationState>(
+      find.byType(HeartAnimation),
+    )._animationController;
+    expect(animationController.isAnimating, true);
+
+    // 2 saniye bekleyin ve animasyonun tamamlanıp tamamlanmadığını kontrol edin
+    await tester.pump(const Duration(seconds: 2));
+    expect(animationController.isCompleted, true);
   });
 }
