@@ -17,7 +17,7 @@ class NurlifeWidget extends StatelessWidget {
             height: 50,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.blue,
+              color: Colors.red,
             ),
           ),
           // İçerik
